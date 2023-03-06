@@ -18,7 +18,7 @@
                 "return": "returns"
              }
         }],
-        "quotes": [1, "single", "allow-avoiding-escaped-quotes"],
+        "quotes": [1, "single"],
         "wrap-iife": 2
     }
 }
