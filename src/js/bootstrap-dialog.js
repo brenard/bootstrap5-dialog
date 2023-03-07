@@ -1158,7 +1158,8 @@
             btnOKClass: null,
             btnOKHotkey: null,
             btnsOrder: BootstrapDialog.defaultOptions.btnsOrder,
-            callback: null
+            callback: null,
+            confirmed: null
         };
         if (typeof arguments[0] === 'object' && arguments[0].constructor === {}.constructor) {
             confirmOptions = $.extend(true, defaultConfirmOptions, arguments[0]);
@@ -1174,12 +1175,18 @@
 
         var dialog = new BootstrapDialog(confirmOptions);
         dialog.setData('callback', confirmOptions.callback);
+        dialog.onHide(function(dialog) {
+          if (dialog.getData('confirmed') == null && typeof dialog.getData('callback') === 'function' && dialog.getData('callback').call(this, null) === false) {
+              return false;
+          }
+        });
 
         var buttons = [{
                 label: confirmOptions.btnCancelLabel,
                 cssClass: confirmOptions.btnCancelClass,
                 hotkey: confirmOptions.btnCancelHotkey,
                 action: function (dialog) {
+                    dialog.setData('confirmed', false);
                     if (typeof dialog.getData('callback') === 'function' && dialog.getData('callback').call(this, false) === false) {
                         return false;
                     }
@@ -1191,6 +1198,7 @@
                 cssClass: confirmOptions.btnOKClass,
                 hotkey: confirmOptions.btnOKHotkey,
                 action: function (dialog) {
+                    dialog.setData('confirmed', true);
                     if (typeof dialog.getData('callback') === 'function' && dialog.getData('callback').call(this, true) === false) {
                         return false;
                     }
