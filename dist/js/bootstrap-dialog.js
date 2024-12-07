@@ -118,12 +118,6 @@
     BootstrapDialog.SIZE_LARGE = 'size-large';
     BootstrapDialog.SIZE_EXTRA_LARGE = 'size-extra-large';
 
-    BootstrapDialog.BUTTON_SIZES = {};
-    BootstrapDialog.BUTTON_SIZES[BootstrapDialog.SIZE_SMALL] = 'btn-sm';
-    BootstrapDialog.BUTTON_SIZES[BootstrapDialog.SIZE_DEFAULT] = '';
-    BootstrapDialog.BUTTON_SIZES[BootstrapDialog.SIZE_LARGE] = 'btn-lg';
-    BootstrapDialog.BUTTON_SIZES[BootstrapDialog.SIZE_EXTRA_LARGE] = 'btn-lg';
-
     BootstrapDialog.ICON_SPINNER = 'spinner-border spinner-border-sm';
     BootstrapDialog.BUTTONS_ORDER_CANCEL_OK = 'btns-order-cancel-ok';
     BootstrapDialog.BUTTONS_ORDER_OK_CANCEL = 'btns-order-ok-cancel';
@@ -421,25 +415,6 @@
                 if (this.getSize() === BootstrapDialog.SIZE_EXTRA_LARGE) {
                     this.getModalDialog().addClass('modal-xl');
                 }
-
-                // Button size
-                $.each(this.options.buttons, function (index, button) {
-                    var $button = dialog.getButton(button.id);
-                    var buttonSizes = ['btn-lg', 'btn-sm'];
-                    var sizeClassSpecified = false;
-                    if (typeof button['cssClass'] === 'string') {
-                        var btnClasses = button['cssClass'].split(' ');
-                        $.each(btnClasses, function (index, btnClass) {
-                            if ($.inArray(btnClass, buttonSizes) !== -1) {
-                                sizeClassSpecified = true;
-                            }
-                        });
-                    }
-                    if (!sizeClassSpecified) {
-                        $button.removeClass(buttonSizes.join(' '));
-                        $button.addClass(dialog.getButtonSize());
-                    }
-                });
             }
 
             return this;
@@ -570,13 +545,6 @@
             }
 
             return null;
-        },
-        getButtonSize: function () {
-            if (typeof BootstrapDialog.BUTTON_SIZES[this.getSize()] !== 'undefined') {
-                return BootstrapDialog.BUTTON_SIZES[this.getSize()];
-            }
-
-            return '';
         },
         updateButtons: function () {
             if (this.isRealized()) {
